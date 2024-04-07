@@ -1,0 +1,25 @@
+header, main {
+    margin: 0;
+    padding: 0;
+}
+
+.name {
+    color: #2d6464;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+header {
+    background-image: url(back-ground-header.png);
+}
+
+main {
+    background-image: url(back-ground-body.png);
+}
+
+.text {
+    margin-left: 10%;
+}
