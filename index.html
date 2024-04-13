@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TO-DO-LIST</title>
-    <link rel="stylesheet" href="index.css">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header>
-        <h1 class="name">To do list</h1>
-        <h2 class="text">Your life in your head</h2>
+        <h1>TO DO LIST</h1>
+        <p>Your life in your hands</p>
     </header>
     <main>
-        <span>Add your task:</span>
+        <div class="container">
+            <div id="schedule" class="section">
+                <h2>Your Schedule</h2>
+                <div class="input-group">
+                    <input type="time" id="time-input" class="input-field">
+                    <input type="text" id="event-input" class="input-field" placeholder="Enter event...">
+                    <button id="add-event-btn" class="btn">Add</button>
+                </div>
+                <ul id="events" class="list"></ul>
+            </div>
+            <p id="task-count">Total Tasks: <span id="total-tasks">0</span>, Completed Tasks: <span
+                    id="completed-tasks">0</span>, Pending Tasks: <span id="pending-tasks">0</span></p>
+            <div id="todo-list" class="section">
+                <h2>Add Task</h2>
+                <div class="input-group">
+                    <input type="text" id="task-input" class="input-field" placeholder="Enter task...">
+                    <select id="priority-select" class="input-field">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button id="add-task-btn" class="btn">Add</button>
+                </div>
+                <ul id="tasks" class="list"></ul>
+            </div>
+        </div>
     </main>
+    <script src="script.js"></script>
 </body>
-
 </html>
