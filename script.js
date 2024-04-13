@@ -109,6 +109,12 @@ document.addEventListener("DOMContentLoaded", function() {
         checkbox.checked = task.done;
         const span = li.querySelector('span');
         span.style.color = task.priority === 'high' ? 'red' : (task.priority === 'medium' ? 'blue' : 'green');
+
+        // Зміна кольору тексту для низького пріорітету
+        if (task.priority === 'low') {
+            span.style.color = 'green';
+        }
+
         if (task.done) {
             span.classList.add('done');
             completedTasks++;
@@ -175,3 +181,4 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 });
+
