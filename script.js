@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const checkbox = li.querySelector('input');
         checkbox.checked = task.done;
         const span = li.querySelector('span');
-        span.style.color = task.priority === 'high' ? 'red' : (task.priority === 'medium' ? 'blue' : 'yellow');
+        span.style.color = task.priority === 'high' ? 'red' : (task.priority === 'medium' ? 'blue' : 'green');
         if (task.done) {
             span.classList.add('done');
             completedTasks++;
