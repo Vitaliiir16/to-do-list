@@ -1,71 +1,89 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* Global styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-    color: #333;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .section {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 20px;
     margin-bottom: 20px;
-    flex-basis: 48%;
 }
 
 .input-group {
-    display: flex;
     margin-bottom: 10px;
+    display: flex;
 }
 
 .input-field {
     flex: 1;
-    padding: 10px;
     margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .btn {
-    background-color: #333;
-    color: #fff;
-    border: none;
     padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .list {
-    list-style: none;
+    list-style-type: none;
+    padding: 0;
 }
 
-.list li {
-    margin-bottom: 10px;
+/* Header styles */
+header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
 }
 
-.list input[type="checkbox"] {
-    margin-right: 10px;
+/* Main styles */
+main {
+    padding: 20px 0;
 }
+
+/* Task count styles */
+#task-count {
+    text-align: center;
+}
+
+/* Media query for phones */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .input-field {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
 
 .done {
     text-decoration: line-through;
 }
+
+
+
