@@ -1,0 +1,10 @@
+#clock {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 6px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

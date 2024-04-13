@@ -1,4 +1,15 @@
-/* Global styles */
+header {
+    background-color:  #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+main {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -42,25 +53,12 @@ body {
     padding: 0;
 }
 
-/* Header styles */
-header {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
 
-/* Main styles */
-main {
-    padding: 20px 0;
-}
-
-/* Task count styles */
 #task-count {
     text-align: center;
 }
 
-/* Media query for phones */
+
 @media only screen and (max-width: 600px) {
     .container {
         padding: 10px;
@@ -84,6 +82,16 @@ main {
 .done {
     text-decoration: line-through;
 }
+
+#tasks li span {
+    font-size: 16px; 
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+
+
+
 
 
 

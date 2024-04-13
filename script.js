@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const addTaskBtn = document.getElementById('add-task-btn');
     const tasksList = document.getElementById('tasks');
     
-    // Modified task count elements
     const taskCount = document.getElementById('task-count');
     const totalTasksSpan = document.getElementById('total-tasks');
     const completedTasksSpan = document.getElementById('completed-tasks');
@@ -17,8 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     let totalTasks = 0;
     let completedTasks = 0;
-    
-    // Load tasks from localStorage
+
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     savedTasks.forEach(task => {
         createTaskElement(task);
@@ -28,15 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
     
-    // Load events from localStorage
     const savedEvents = JSON.parse(localStorage.getItem('events')) || [];
     savedEvents.forEach(event => {
         createEventElement(event);
     });
     
-    updateTaskCount(); // Оновлення після завантаження сторінки
+    updateTaskCount();
     
-    // Add event listener for adding events
     addEventBtn.addEventListener('click', function() {
         const time = scheduleInput.value;
         const event = eventInput.value;
@@ -50,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
     
-    // Add event listener for adding tasks
     addTaskBtn.addEventListener('click', function() {
         const taskName = taskInput.value;
         const priority = prioritySelect.value;
@@ -61,15 +56,36 @@ document.addEventListener("DOMContentLoaded", function() {
             saveTasksToLocalStorage();
             taskInput.value = '';
             totalTasks++;
-            updateTaskCount(); // Оновлення після додавання завдання
+            updateTaskCount();
         }
     });
     
-    // Function to create new event element
     function createEventElement(event) {
         const li = document.createElement('li');
-        li.textContent = `${event.time} - ${event.event}`;
-        
+
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('time');
+        timeSpan.textContent = event.time;
+
+        const eventSpan = document.createElement('span');
+        eventSpan.classList.add('event');
+        eventSpan.textContent = event.event;
+
+        const changeButton = document.createElement('button');
+        changeButton.textContent = 'Change';
+        changeButton.classList.add('change-button');
+        changeButton.addEventListener('click', function() {
+            const newTime = prompt("Enter new time:", event.time);
+            const newEventName = prompt("Enter new event name:", event.event);
+            if (newTime && newEventName) {
+                event.time = newTime;
+                event.event = newEventName;
+                timeSpan.textContent = event.time;
+                eventSpan.textContent = event.event;
+                saveEventsToLocalStorage();
+            }
+        });
+
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '&times;';
         deleteButton.classList.add('delete-button');
@@ -77,25 +93,28 @@ document.addEventListener("DOMContentLoaded", function() {
             li.remove();
             saveEventsToLocalStorage();
         });
-        
+
+        li.appendChild(timeSpan);
+        li.appendChild(document.createTextNode(' - '));
+        li.appendChild(eventSpan);
+        li.appendChild(changeButton);
         li.appendChild(deleteButton);
         eventsList.appendChild(li);
     }
     
-    // Function to create new task element
     function createTaskElement(task) {
         const li = document.createElement('li');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        const span = document.createElement('span');
-        span.textContent = task.name;
-        span.style.color = task.priority === 'high' ? 'red' : (task.priority === 'medium' ? 'orange' : 'blue');
+        li.innerHTML = `<input type="checkbox"> <span>${task.name} (${task.priority})</span>`;
+        const checkbox = li.querySelector('input');
+        checkbox.checked = task.done;
+        const span = li.querySelector('span');
+        span.style.color = task.priority === 'high' ? 'red' : (task.priority === 'medium' ? 'blue' : 'yellow');
         if (task.done) {
             span.classList.add('done');
             completedTasks++;
         }
-        li.appendChild(checkbox);
-        li.appendChild(span);
+        tasksList.appendChild(li);
+        
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '&times;';
         deleteButton.classList.add('delete-button');
@@ -105,10 +124,11 @@ document.addEventListener("DOMContentLoaded", function() {
             if (task.done) {
                 completedTasks--;
             }
-            updateTaskCount(); // Оновлення після видалення завдання
+            updateTaskCount();
             saveTasksToLocalStorage();
         });
         li.appendChild(deleteButton);
+        
         checkbox.addEventListener('change', function() {
             if (checkbox.checked) {
                 span.classList.add('done');
@@ -119,36 +139,36 @@ document.addEventListener("DOMContentLoaded", function() {
                 completedTasks--;
                 task.done = false;
             }
-            updateTaskCount(); // Оновлення після зміни стану завдання
+            updateTaskCount();
             saveTasksToLocalStorage();
         });
-        tasksList.appendChild(li);
     }
     
-    // Function to update task count
     function updateTaskCount() {
-        taskCount.textContent = `Total Tasks: ${totalTasks}, Completed Tasks: ${completedTasks}, Pending Tasks: ${totalTasks - completedTasks}`;
+        completedTasks = Array.from(tasksList.children).filter(li => li.querySelector('input').checked).length;
+        totalTasks = tasksList.children.length;
+        const pendingTasks = totalTasks - completedTasks;
+        taskCount.textContent = `Total Tasks: ${totalTasks}, Completed Tasks: ${completedTasks}, Pending Tasks: ${pendingTasks}`;
         totalTasksSpan.textContent = totalTasks;
         completedTasksSpan.textContent = completedTasks;
-        pendingTasksSpan.textContent = totalTasks - completedTasks;
+        pendingTasksSpan.textContent = pendingTasks;
         localStorage.setItem('totalTasks', totalTasks);
         localStorage.setItem('completedTasks', completedTasks);
     }
     
-    // Function to save events to localStorage
     function saveEventsToLocalStorage() {
         const events = Array.from(eventsList.children).map(li => {
-            const [time, event] = li.textContent.split(' - ');
+            const time = li.querySelector('.time').textContent;
+            const event = li.querySelector('.event').textContent;
             return { time, event };
         });
         localStorage.setItem('events', JSON.stringify(events));
     }
     
-    // Function to save tasks to localStorage
     function saveTasksToLocalStorage() {
         const tasks = Array.from(tasksList.children).map(li => {
-            const name = li.querySelector('span').textContent;
-            const priority = li.querySelector('span').style.color === 'red' ? 'high' : (li.querySelector('span').style.color === 'orange' ? 'medium' : 'low');
+            const name = li.querySelector('span').textContent.split(' (')[0];
+            const priority = li.querySelector('span').textContent.split(' (')[1].slice(0, -1);
             const done = li.querySelector('input').checked;
             return { name, priority, done };
         });
