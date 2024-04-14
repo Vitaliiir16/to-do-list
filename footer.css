@@ -1,24 +1,16 @@
+/* footer.css */
 footer {
-    background-color: #343a40;
+    background-color: #6e707a;
     color: white;
-    padding: 20px;
+    padding: 40px 0;
     text-align: center;
 }
 
 .quote {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .quote p {
     margin: 0;
-}
-
-@media only screen and (max-width: 600px) {
-    footer {
-        padding: 10px;
-    }
-
-    .quote {
-        margin-bottom: 10px;
-    }
+    font-size: 18px;
 }
